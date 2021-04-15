@@ -9,6 +9,8 @@ const App = () => {
 
   const [ newNumero, setNewNumero ] = useState('')
 
+  const [ newFilter, setNewFilter ] = useState('')
+
   function guardarPersona(event){
     event.preventDefault()
     const nuevaPersona = {
@@ -33,9 +35,15 @@ const App = () => {
   function valorNumero(event){
     setNewNumero(event.target.value)
   }
+  function valorFiltro(event){
+    setNewFilter(event.target.value)
+  }
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+          filter: <input onChange={valorFiltro}/>
+        </div>
       <form onSubmit={guardarPersona}>
         <div>
           name: <input onChange={valorNombre}/>
@@ -43,12 +51,15 @@ const App = () => {
         <div>
           number: <input onChange={valorNumero}/>
         </div>
+        
         <div>
           <button type="submit">add</button>
         </div>
       </form>
+      
       <h2>Numbers</h2>
-      {persons.map(persona => <p>{persona.name} {persona.number}</p>)}
+      {persons.filter(persona => persona.name.includes(newFilter))
+      .map(persona => <p>{persona.name} {persona.number}</p>)}
     </div>
   )
 }
